@@ -1,11 +1,5 @@
-# Node.js with Angular
-# Build a Node.js project that uses Angular.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
-
 pool:
     vmImage: "ubuntu-latest"
-
 jobs:
 - job: preview
   steps:
@@ -16,10 +10,10 @@ jobs:
     inputs:
       command: install
   - task: Pulumi@1
-    # condition: or(eq(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.Reason'], 'Manual'))
     inputs:
       command: 'preview'
       stack: 'pierskarsenbarg/azure-devops-typescript/dev'
+      cwd: "/path/to/subfolder"
 
 - job: manualintervention
   dependsOn: preview
@@ -39,7 +33,6 @@ jobs:
     inputs:
       command: install
   - task: Pulumi@1
-    # condition: or(eq(variables['Build.Reason'], 'IndividualCI'), eq(variables['Build.Reason'], 'BatchedCI'))
     inputs:
       command: 'up'
       stack: 'pierskarsenbarg/azure-devops-typescript/dev'
@@ -61,7 +54,6 @@ jobs:
     inputs:
       command: install
   - task: Pulumi@1
-    # condition: or(eq(variables['Build.Reason'], 'IndividualCI'), eq(variables['Build.Reason'], 'BatchedCI'))
     inputs:
       command: 'destroy'
       stack: 'pierskarsenbarg/azure-devops-typescript/dev'
