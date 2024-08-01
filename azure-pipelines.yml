@@ -19,6 +19,8 @@ jobs:
     inputs:
       command: 'preview'
       stack: 'pierskarsenbarg/azure-devops-typescript/dev'
+  - task: ManualIntervention@8
+    inputs:
   - task: Pulumi@1
     # condition: or(eq(variables['Build.Reason'], 'IndividualCI'), eq(variables['Build.Reason'], 'BatchedCI'))
     inputs:
