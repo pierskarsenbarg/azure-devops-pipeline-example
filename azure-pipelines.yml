@@ -14,6 +14,10 @@ jobs:
   - task: Pulumi@1
     # condition: or(eq(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.Reason'], 'Manual'))
     inputs:
+      command: 'install'
+  - task: Pulumi@1
+    # condition: or(eq(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.Reason'], 'Manual'))
+    inputs:
       command: 'preview'
       stack: 'pierskarsenbarg/azure-devops-typescript/dev'
   - task: Pulumi@1
