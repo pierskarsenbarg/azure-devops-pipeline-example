@@ -8,6 +8,7 @@ pool:
 
 jobs:
 - job: setup
+  pool: server
   displayName: Install pipeline dependencies
   steps:
   - task: UseNode@1
@@ -19,6 +20,7 @@ jobs:
 
 - job: preview
   dependsOn: setup
+  pool: server
   steps:
   - task: Pulumi@1
     # condition: or(eq(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.Reason'], 'Manual'))
@@ -36,6 +38,7 @@ jobs:
 
 - job: update
   dependsOn: manualintervention
+  pool: server
   steps:
   - task: Pulumi@1
     # condition: or(eq(variables['Build.Reason'], 'IndividualCI'), eq(variables['Build.Reason'], 'BatchedCI'))
