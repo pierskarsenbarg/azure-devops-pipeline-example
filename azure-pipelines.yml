@@ -21,6 +21,7 @@ jobs:
       stack: 'pierskarsenbarg/azure-devops-typescript/dev'
   - task: ManualIntervention@8
     inputs:
+      instructions: "If preview looks good then proceed"
   - task: Pulumi@1
     # condition: or(eq(variables['Build.Reason'], 'IndividualCI'), eq(variables['Build.Reason'], 'BatchedCI'))
     inputs:
