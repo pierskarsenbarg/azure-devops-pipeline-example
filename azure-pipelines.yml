@@ -43,7 +43,7 @@ jobs:
     inputs:
       command: 'up'
       stack: 'pierskarsenbarg/azure-devops-typescript/dev'
-      args: '--yes'
+      args: '--yes --skip-preview'
   - script: |
       echo "##vso[task.setvariable variable=petName;isOutput=true]$(pulumi stack output petName)"
     displayName: 'Set stack outputs as variables'
