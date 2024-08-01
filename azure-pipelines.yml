@@ -26,15 +26,15 @@ jobs:
       command: 'preview'
       stack: 'pierskarsenbarg/azure-devops-typescript/dev'
 
-- job: manualintervention
-  dependsOn: preview
-  pool: server
-  - task: ManualIntervention@8
-    inputs:
-      instructions: "If preview looks good then proceed"
-      
+# - job: manualintervention
+#   dependsOn: preview
+#   pool: server
+#   - task: ManualIntervention@8
+#     inputs:
+#       instructions: "If preview looks good then proceed"
+
 - job: update
-  dependsOn: manualintervention
+  # dependsOn: manualintervention
   - task: Pulumi@1
     # condition: or(eq(variables['Build.Reason'], 'IndividualCI'), eq(variables['Build.Reason'], 'BatchedCI'))
     inputs:
