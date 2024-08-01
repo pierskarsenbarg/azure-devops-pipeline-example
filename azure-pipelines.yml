@@ -50,3 +50,19 @@ jobs:
     name: 'pulumi'
   - script: echo $(pulumi.petName)
     displayName: 'Run a one-line script' 
+
+- job: destroy
+  dependsOn: update
+  steps:
+  - task: UseNode@1
+    inputs:
+      version: '20.x'
+  - task: Npm@1
+    inputs:
+      command: install
+  - task: Pulumi@1
+    # condition: or(eq(variables['Build.Reason'], 'IndividualCI'), eq(variables['Build.Reason'], 'BatchedCI'))
+    inputs:
+      command: 'destroy'
+      stack: 'pierskarsenbarg/azure-devops-typescript/dev'
+      args: '--yes --skip-preview' 
