@@ -11,10 +11,9 @@ jobs:
   - task: UseNode@1
     inputs:
       version: '20.x'
-  - task: Pulumi@1
-    # condition: or(eq(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.Reason'], 'Manual'))
+  - task: Npm@1
     inputs:
-      command: 'install'
+      command: install
   - task: Pulumi@1
     # condition: or(eq(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.Reason'], 'Manual'))
     inputs:
