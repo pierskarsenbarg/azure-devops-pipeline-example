@@ -1,0 +1,30 @@
+# Node.js with Angular
+# Build a Node.js project that uses Angular.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+jobs:
+- job: infrastructure
+  pool:
+    vmImage: 'ubuntu-latest'
+  steps:
+  - task: UseNode@1
+    inputs:
+      version: '20.x'
+  - task: Pulumi@1
+    # condition: or(eq(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.Reason'], 'Manual'))
+    inputs:
+      command: 'preview'
+      stack: 'pierskarsenbarg/azure-devops-typescript/dev'
+  - task: Pulumi@1
+    # condition: or(eq(variables['Build.Reason'], 'IndividualCI'), eq(variables['Build.Reason'], 'BatchedCI'))
+    inputs:
+      command: 'up'
+      stack: 'pierskarsenbarg/azure-devops-typescript/dev'
+      args: '--yes'
+  - script: |
+      echo "##vso[task.setvariable variable=petName;isOutput=true]$(pulumi stack output petName)"
+    displayName: 'Set stack outputs as variables'
+    name: 'pulumi'
+  - script: echo $(pulumi.petName)
+    displayName: 'Run a one-line script' 
