@@ -7,9 +7,7 @@ pool:
     vmImage: "ubuntu-latest"
 
 jobs:
-- job: setup
-  pool: server
-  displayName: Install pipeline dependencies
+- job: preview
   steps:
   - task: UseNode@1
     inputs:
@@ -17,11 +15,6 @@ jobs:
   - task: Npm@1
     inputs:
       command: install
-
-- job: preview
-  dependsOn: setup
-  pool: server
-  steps:
   - task: Pulumi@1
     # condition: or(eq(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.Reason'], 'Manual'))
     inputs:
@@ -38,8 +31,13 @@ jobs:
 
 - job: update
   dependsOn: manualintervention
-  pool: server
   steps:
+  - task: UseNode@1
+    inputs:
+      version: '20.x'
+  - task: Npm@1
+    inputs:
+      command: install
   - task: Pulumi@1
     # condition: or(eq(variables['Build.Reason'], 'IndividualCI'), eq(variables['Build.Reason'], 'BatchedCI'))
     inputs:
