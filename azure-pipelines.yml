@@ -25,7 +25,7 @@ jobs:
   dependsOn: preview
   pool: server
   steps:
-  - task: ManualIntervention@8
+  - task: ManualValidation@0
     inputs:
       instructions: "If preview looks good then proceed"
 
